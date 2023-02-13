@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Rent A Car</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Rent A Car</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cars}">List of Cars</a>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin}">Admin</a>
+        </ul>
+    </div>
+</nav>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <h1>List Cars</h1>
+    </div>
+    <div class="">
+        <a th:href = "@{/cars/new}" class = "btn btn-primary btn-sm mb-3">Add Cars</a>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Car Type</th>
+            <th>Car Price</th>
+            <th>Activated Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "car : ${cars}">
+            <td th:text = "${car.carType}"></td>
+            <td th:text = "${car.price}"></td>
+            <td th:text = "${car.isRented}"></td>
+            <td>
+                <a th:href ="@{/cars/edit/{id}(id=${car.id})}" class="btn btn-primary">Edit</a>
+                <a th:href ="@{/cars/reset/{id}(id=${car.id})}" class="btn btn-warning">Activate</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <h1>Rented Cars</h1>
+    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Car Type</th>
+            <th>Who Rented</th>
+            <th>Total Price</th>
+            <th>Date From</th>
+            <th>Date To</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "rental : ${rentals}">
+            <td th:text = "${rental.car.carType}"></td>
+            <td th:text = "${rental.user.name}"></td>
+            <td th:text = "${rental.user.sumOfPrice}"></td>
+            <td th:text = "${rental.dateFrom}"></td>
+            <td th:text = "${rental.dateTo}"></td>
+            <td>
+                <a th:href ="@{/cars/delete/{id}(id=${rental.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
